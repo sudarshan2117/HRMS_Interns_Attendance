@@ -6,8 +6,8 @@ ASP.NET Core + SQL Server intern attendance system for Wisteria Properties Pvt. 
 
 Seed admin account:
 
-- Username: `hr@wisteriaproperties.in`
-- Password: `KreenaHR@2026`
+- Username: 
+- Password: 
 
 Intern login:
 
