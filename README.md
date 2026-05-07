@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Wisteria Intern Attendance
 
 ASP.NET Core + SQL Server intern attendance system for Wisteria Properties Pvt. Ltd.
@@ -117,3 +118,7 @@ Recommended quick path: **Windows VM + IIS + SQL Server**.
 - Browser GPS requires **HTTPS** on internet; without SSL location capture may fail.
 - Reverse geocoding uses OpenStreetMap Nominatim API; add reasonable usage limits.
 - Replace default admin password immediately after first login.
+=======
+# HRMS_Interns_Attendance
+A smart ASP.NET Core based intern attendance and management system with real-time clock-in/clock-out, GPS location tracking, admin dashboard, attendance analytics, Excel export, and salary slip generation.
+>>>>>>> 46d736d72a3c893e1c84ae859c56965c90d900a4
