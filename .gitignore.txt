@@ -1,0 +1,10 @@
+.vs/
+bin/
+obj/
+node_modules/
+publish/
+*.user
+*.suo
+*.db
+*.mdf
+*.ldf

@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Wisteria Intern Attendance</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <main id="loginView" class="login-shell">
+    <section class="brand-panel">
+      <img src="/assets/wisteria-logo.jpeg" alt="Wisteria Properties" class="brand-logo">
+      <div>
+        <p class="eyebrow">Intern Attendance</p>
+        <h1>Wisteria Properties Pvt. Ltd.</h1>
+        <p class="muted">3rd Floor, Silver Space, above Saraswat Bank, Vishal Nagar, Pimple Nilakh, Pune, 411027</p>
+        <a href="https://wisteriaproperties.in/" target="_blank" rel="noreferrer">wisteriaproperties.in</a>
+      </div>
+    </section>
+
+    <section class="login-card">
+      <h2>Sign in</h2>
+      <p class="muted">Admin and interns use credentials created by HR.</p>
+      <form id="loginForm">
+        <label>
+          Username or email
+          <input id="loginUsername" type="text" autocomplete="username" required>
+        </label>
+        <label>
+          Password
+          <input id="loginPassword" type="password" autocomplete="current-password" required>
+        </label>
+        <button type="submit" class="primary">Login</button>
+      </form>
+      <p id="loginError" class="error"></p>
+    </section>
+  </main>
+
+  <main id="appView" class="app-shell hidden">
+    <aside class="sidebar">
+      <img src="/assets/wisteria-logo.jpeg" alt="Wisteria" class="sidebar-logo">
+      <nav id="adminNav" class="nav hidden">
+        <button data-page="adminDashboard" class="active">Dashboard</button>
+        <button data-page="adminInterns">Interns</button>
+        <button data-page="adminAttendance">Attendance</button>
+        <button data-page="adminActivities">Activities</button>
+      </nav>
+      <nav id="internNav" class="nav hidden">
+        <button data-page="internDashboard" class="active">Attendance</button>
+        <button data-page="internActivity">Work Upload</button>
+        <button data-page="internHistory">History</button>
+      </nav>
+      <button id="logoutBtn" class="ghost">Logout</button>
+    </aside>
+
+    <section class="content">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow" id="roleLabel">Dashboard</p>
+          <h2 id="userName">Welcome</h2>
+        </div>
+        <div class="live-clock">
+          <span id="dateText"></span>
+          <strong id="timeText"></strong>
+        </div>
+      </header>
+
+      <section id="adminDashboard" class="page">
+        <div class="stats-grid">
+          <article><span>Active Interns</span><strong id="statActive">0</strong></article>
+          <article><span>Present Today</span><strong id="statPresent">0</strong></article>
+          <article><span>Late Today</span><strong id="statLate">0</strong></article>
+          <article><span>Half Day</span><strong id="statHalf">0</strong></article>
+          <article><span>Absent</span><strong id="statAbsent">0</strong></article>
+        </div>
+        <div class="panel-grid">
+          <section class="panel">
+            <div class="panel-head">
+              <h3>Monthly Status</h3>
+            </div>
+            <div id="statusChart" class="bar-chart"></div>
+          </section>
+          <section class="panel">
+            <div class="panel-head">
+              <h3>Recent Activity</h3>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Name</th><th>Date</th><th>In</th><th>Out</th><th>Status</th></tr></thead>
+                <tbody id="recentRows"></tbody>
+              </table>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <section id="adminInterns" class="page hidden">
+        <div class="split">
+          <section class="panel">
+            <div class="panel-head">
+              <h3>Add Intern</h3>
+            </div>
+            <form id="internForm" class="form-grid">
+              <input name="fullName" placeholder="Full name" required>
+              <input name="phoneNumber" placeholder="Phone number" required>
+              <input name="projectName" placeholder="Project name">
+              <input name="initialPassword" placeholder="Initial password, blank to auto-generate">
+              <label>Photo up to 1MB<input name="photo" type="file" accept="image/png,image/jpeg,image/webp"></label>
+              <input name="workLocationName" placeholder="Area/site name, e.g. Baner site">
+              <input name="workLatitude" type="number" step="0.0000001" placeholder="Site latitude optional">
+              <input name="workLongitude" type="number" step="0.0000001" placeholder="Site longitude optional">
+              <label>Start date<input name="internshipStartDate" type="date" required></label>
+              <label>End date<input name="internshipEndDate" type="date" required></label>
+              <textarea name="permanentAddress" placeholder="Permanent address"></textarea>
+              <textarea name="remark" placeholder="Remark/status note"></textarea>
+              <button type="submit" class="primary">Create Intern</button>
+            </form>
+            <div id="credentialBox" class="credential-box hidden"></div>
+          </section>
+
+          <section class="panel">
+            <div class="panel-head">
+              <h3>Intern List</h3>
+              <button id="refreshInterns" class="ghost small">Refresh</button>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Photo</th><th>Name</th><th>Phone</th><th>Project</th><th>Location</th><th>Status</th><th></th></tr></thead>
+                <tbody id="internRows"></tbody>
+              </table>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <section id="adminAttendance" class="page hidden">
+        <section class="panel">
+          <div class="panel-head">
+            <h3>Attendance Export</h3>
+            <button id="exportBtn" class="primary small">Export Excel</button>
+          </div>
+          <div class="filter-row">
+            <select id="attendanceInternSelect"></select>
+            <input id="attendanceMonth" type="month">
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>Date</th><th>In</th><th>Out</th><th>Hours</th><th>Status</th><th>Clock In Location</th><th>Clock Out Location</th></tr>
+              </thead>
+              <tbody id="attendanceRows"></tbody>
+            </table>
+          </div>
+        </section>
+      </section>
+
+      <section id="adminActivities" class="page hidden">
+        <section class="panel">
+          <div class="panel-head">
+            <h3>Daily Work Activities</h3>
+          </div>
+          <div class="filter-row">
+            <select id="activityInternSelect"></select>
+            <input id="activityMonth" type="month">
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>Date</th><th>Intern</th><th>Project</th><th>Comment</th><th>File</th><th>Submitted</th></tr>
+              </thead>
+              <tbody id="activityRows"></tbody>
+            </table>
+          </div>
+        </section>
+      </section>
+
+      <section id="internDashboard" class="page hidden">
+        <div class="intern-hero">
+          <div>
+            <img id="internPhoto" class="profile-photo hidden" alt="Intern photo">
+            <p class="eyebrow">Today</p>
+            <h3 id="internDate">Mark your attendance</h3>
+            <p id="todayStatus" class="status-line">Clock in before 10:15 AM. Clock out before 11:59 PM today.</p>
+          </div>
+          <div class="clock-face">
+            <span id="bigTime">00:00:00</span>
+          </div>
+        </div>
+        <section class="panel attendance-panel">
+          <label>
+            Current area/site name
+            <input id="areaName" placeholder="Example: Vishal Nagar office, Baner site, Wakad site">
+          </label>
+          <div id="locationReadout" class="muted">Location will be captured when you click the button.</div>
+          <div id="lastPingStatus" class="muted">Location ping not sent yet.</div>
+          <button id="attendanceBtn" class="attendance-btn">Clock In</button>
+          <button id="locationPingBtn" class="ghost">Log Current Location</button>
+        </section>
+      </section>
+
+      <section id="internActivity" class="page hidden">
+        <section class="panel">
+          <div class="panel-head">
+            <h3>Daily Work Upload</h3>
+          </div>
+          <form id="activityForm" class="activity-form">
+            <label>
+              Today's work comment
+              <textarea id="activityComment" name="comment" placeholder="Write what you worked on today" required></textarea>
+            </label>
+            <label>
+              Upload file, optional up to 5MB
+              <input id="activityFile" name="file" type="file" accept=".jpg,.jpeg,.png,.webp,.pdf,.doc,.docx,.xls,.xlsx,.txt">
+            </label>
+            <button type="submit" class="primary">Submit Work Activity</button>
+          </form>
+          <div id="activityMessage" class="credential-box hidden"></div>
+          <div class="table-wrap activity-history">
+            <table>
+              <thead>
+                <tr><th>Date</th><th>Intern</th><th>Project</th><th>Comment</th><th>File</th><th>Submitted</th></tr>
+              </thead>
+              <tbody id="internActivityRows"></tbody>
+            </table>
+          </div>
+        </section>
+      </section>
+
+      <section id="internHistory" class="page hidden">
+        <section class="panel">
+          <div class="panel-head">
+            <h3>My Monthly Attendance</h3>
+            <input id="internMonth" type="month">
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Date</th><th>In</th><th>Out</th><th>Hours</th><th>Status</th><th>Location</th></tr></thead>
+              <tbody id="internHistoryRows"></tbody>
+            </table>
+          </div>
+        </section>
+      </section>
+    </section>
+  </main>
+
+  <script src="/app.js"></script>
+</body>
+</html>

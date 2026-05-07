@@ -1,0 +1,7 @@
+wwwroot\app.js
+wwwroot\assets\wisteria-logo.jpeg
+wwwroot\index.html
+wwwroot\styles.css
+C:\Users\sudar\Documents\New project\WisteriaInternAttendance\wwwroot\app.js
+C:\Users\sudar\Documents\New project\WisteriaInternAttendance\wwwroot\index.html
+C:\Users\sudar\Documents\New project\WisteriaInternAttendance\wwwroot\styles.css
