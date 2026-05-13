@@ -185,6 +185,10 @@ textarea {
   grid-template-columns: 260px minmax(0, 1fr);
 }
 
+.app-shell.nav-collapsed {
+  grid-template-columns: 82px minmax(0, 1fr);
+}
+
 .sidebar {
   background: #fff;
   border-right: 1px solid var(--line);
@@ -194,10 +198,51 @@ textarea {
   gap: 24px;
 }
 
+.sidebar-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
 .sidebar-logo {
   width: 100%;
   max-height: 88px;
   object-fit: contain;
+}
+
+.icon-btn {
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--blue);
+  border-radius: 8px;
+  width: 42px;
+  height: 42px;
+  font-weight: 900;
+  flex: 0 0 auto;
+}
+
+.nav-collapsed .sidebar {
+  padding: 16px 10px;
+}
+
+.nav-collapsed .sidebar-head {
+  justify-content: center;
+}
+
+.nav-collapsed .sidebar-logo {
+  display: none;
+}
+
+.nav-collapsed .nav button,
+.nav-collapsed #logoutBtn {
+  font-size: 0;
+  text-align: center;
+  padding: 12px 8px;
+}
+
+.nav-collapsed .nav button::first-letter,
+.nav-collapsed #logoutBtn::first-letter {
+  font-size: 15px;
 }
 
 .nav {
@@ -494,26 +539,230 @@ th {
   margin-top: 18px;
 }
 
-.attendance-btn {
-  min-height: 72px;
-  background: var(--green);
-  color: #102a16;
-  font-size: 24px;
+.phone-field {
+  display: grid;
+  grid-template-columns: 118px minmax(0, 1fr);
+  gap: 8px;
 }
 
-.attendance-btn.clocked {
-  background: var(--danger);
+.phone-field select,
+.phone-field input {
+  min-height: 46px;
+}
+
+.intern-preview {
+  margin-top: 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 14px;
+  background: #f9fcff;
+}
+
+.intern-preview-grid {
+  display: grid;
+  grid-template-columns: 90px 1fr;
+  gap: 14px;
+}
+
+.intern-preview dl {
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px 14px;
+}
+
+.intern-preview dt {
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.intern-preview dd {
+  margin: 0;
+  font-weight: 700;
+}
+
+.attendance-btn {
+  min-height: 72px;
+  background: #dc2626;
+  color: #fff;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.punch-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.attendance-btn.punch-out {
+  background: #b91c1c;
   color: #fff;
 }
 
+.attendance-btn.ready {
+  background: var(--green);
+  color: #102a16;
+  box-shadow: 0 0 0 3px rgba(128, 183, 68, 0.35), 0 0 22px rgba(128, 183, 68, 0.65);
+  animation: glowPulse 1.4s ease-in-out infinite;
+  cursor: pointer;
+}
+
+.attendance-btn.punch-out.ready {
+  background: var(--green);
+  color: #102a16;
+  box-shadow: 0 0 0 3px rgba(194, 65, 12, 0.3), 0 0 22px rgba(194, 65, 12, 0.55);
+}
+
+.attendance-light {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+  border-radius: 999px;
+  padding: 8px 12px;
+  font-weight: 900;
+  color: #7f1d1d;
+  background: #fee2e2;
+}
+
+.attendance-light::before {
+  content: "";
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #dc2626;
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.18);
+}
+
+.attendance-light.active,
+.attendance-light.completed {
+  color: #14532d;
+  background: #dcfce7;
+}
+
+.attendance-light.active::before,
+.attendance-light.completed::before {
+  background: #16a34a;
+  box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.18);
+}
+
+@keyframes glowPulse {
+  0%, 100% { filter: brightness(1); transform: translateY(0); }
+  50% { filter: brightness(1.06); transform: translateY(-1px); }
+}
+
 .attendance-btn:disabled {
-  opacity: 0.65;
+  background: #e5e7eb;
+  color: #64748b;
+  box-shadow: none;
+  animation: none;
+  opacity: 1;
   cursor: not-allowed;
 }
 
 .status-line {
   color: var(--blue);
   font-weight: 800;
+}
+
+code, .plain-pw {
+  background: #f0f4f8;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  padding: 2px 7px;
+  font-family: monospace;
+  font-size: 13px;
+  letter-spacing: 0.03em;
+  word-break: break-all;
+}
+
+/* ── Progress card ── */
+.progress-card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.progress-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 14px;
+  gap: 12px;
+}
+
+.progress-header h4 {
+  margin: 0 0 4px;
+  font-size: 18px;
+}
+
+.progress-pct {
+  font-size: 36px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.progress-track {
+  height: 18px;
+  background: #e9f0f5;
+  border-radius: 999px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.6s ease;
+}
+
+.progress-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 16px;
+}
+
+.progress-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.pstat {
+  border-radius: 8px;
+  padding: 12px;
+  text-align: center;
+  display: grid;
+  gap: 4px;
+}
+
+.pstat strong { font-size: 24px; }
+.pstat span { font-size: 12px; font-weight: 700; }
+.pstat.green { background: #dcfce7; color: #166534; }
+.pstat.orange { background: #ffedd5; color: #9a3412; }
+.pstat.red { background: #fee2e2; color: #991b1b; }
+
+.progress-days-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+}
+
+.day-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  background: #e9f0f5;
+  display: inline-block;
+}
+
+.day-dot.filled {
+  background: var(--blue);
 }
 
 @media (max-width: 980px) {
@@ -534,6 +783,10 @@ th {
     min-height: auto;
   }
 
+  .app-shell.nav-collapsed {
+    grid-template-columns: 1fr;
+  }
+
   .sidebar {
     position: sticky;
     top: 0;
@@ -544,6 +797,23 @@ th {
 
   .sidebar-logo {
     max-height: 54px;
+  }
+
+  .nav-collapsed .sidebar-logo {
+    display: block;
+  }
+
+  .nav-collapsed .nav,
+  .nav-collapsed #logoutBtn {
+    display: none;
+  }
+
+  .nav-collapsed .sidebar {
+    gap: 0;
+  }
+
+  .nav-collapsed .sidebar-head {
+    justify-content: space-between;
   }
 
   .nav {
@@ -652,5 +922,9 @@ th {
   .attendance-btn {
     min-height: 62px;
     font-size: 21px;
+  }
+
+  .punch-actions {
+    grid-template-columns: 1fr;
   }
 }

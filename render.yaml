@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: wisteria-intern-attendance
+    env: docker
+    plan: free
+    autoDeploy: true
+    healthCheckPath: /api/health/startup
+    envVars:
+      - key: ASPNETCORE_ENVIRONMENT
+        value: Production
+      - key: ConnectionStrings__DefaultConnection
+        sync: false
+      - key: SeedAdmin__Name
+        value: Wisteria HR
+      - key: SeedAdmin__Username
+        sync: false
+      - key: SeedAdmin__Password
+        sync: false
+      - key: Geofence__DefaultRadiusMeters
+        value: 250

@@ -1,0 +1,8 @@
+bin/
+obj/
+publish/
+.vs/
+.git/
+*.db
+server.*.log
+Microsoft.NET.Sdk.StaticWebAssets.Compression
